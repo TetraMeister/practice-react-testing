@@ -13,6 +13,9 @@ function LoginForm(props) {
     }
 
     const [user, setUser] = useState(userDefault);
+    const [error, setError] = useState(null);
+
+    if(error) throw error;
 
     function checkValue(value) {
         if(value.length <= 3)  {
@@ -22,14 +25,19 @@ function LoginForm(props) {
 
     function handleChange(e) {
         const {name: field, value} = e.target;
+        console.log(field, value)
         if(typeof user[field] !== 'undefined') {
+            try {
             checkValue(value);
-            setUser({...user, [field]: {value, error: ''} });
+            setUser({...user, [field]: {value, error: ""} });
+            } catch (err) {
+            setUser({...user, [field]: {value, error: err.message} });
+            }
         }
     }
 
     function throwError() {
-        throw new Error('Incorrect data!');
+        setError(new Error('Incorrect data!'));
     }
 
     function handleSubmit(e) {
