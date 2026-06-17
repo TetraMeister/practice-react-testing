@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const Md5Form = ({getMd5}) => {
+    const isMounted = useRef(false);
     const [text, setText] = useState('');
     const [md5, setMd5] = useState('');
 
@@ -9,10 +10,17 @@ const Md5Form = ({getMd5}) => {
         setMd5('');
     }
 
+    React.useEffect(() => {
+        isMounted.current = true;
+
+        return () => isMounted.current = false;
+    }, [])
+
     async function handleSubmit(e) {
         e.preventDefault();
-
-        setMd5(await getMd5(text));
+        if(isMounted.current) {
+            setMd5(await getMd5(text));
+        }
     }
 
     return (
