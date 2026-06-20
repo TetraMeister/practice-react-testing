@@ -9,8 +9,8 @@ describe('Card', () => {
     await userEvent.type(screen.getByRole('textbox'), '4234567890123456');
     await userEvent.click(screen.getByRole('button'));
 
-    expect(screen.getByText(/Visa/)).toBeInTheDocument();
-    expect(screen.queryByText(/Invalid/)).not.toBeInTheDocument();
+    expect(screen.getByText(/Visa/)).toBeInTheDocument()
+    expect(screen.queryByText(/Invalid/)).not.toBeInTheDocument()
   });
 
   it('rozpoznaje MasterCard dla poprawnego numeru', async () => {
